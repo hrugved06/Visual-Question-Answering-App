@@ -122,7 +122,7 @@ def load_model_and_featurizers():
     # The weights obtained are a result of training on 'imagenet' dataset. 
     vgg16_model = vgg16.VGG16(
         weights='imagenet', 
-        input_shape=IMG_TARGET_SIZE+ (3,), #`input_shape` must be a tuple of three integers. The input must have 3 channels if weights = 'imagenet'
+        input_shape=IMG_TARGET_SIZE+ (3,), 
     )
     vgg16_model.trainable = False
 
@@ -184,30 +184,32 @@ with col1:
 
 
 with col2:
-    eng, hin= st.tabs(["English","Hindi"])
+    eng= st.tabs(["English"])
 
-    with eng:
-        st.subheader("Question: ")
-        question = st.text_area('Ask a Question').strip()
+    # with eng:
+    st.subheader("Question: ")
+    question = st.text_area('Ask a Question').strip()
 
-        submit_btn = st.button('Submit')
-        if submit_btn:
-            # Progress bar
-            my_bar = st.progress(0)
-            for percent_complete in range(100):
-                time.sleep(0.03)
-                my_bar.progress(percent_complete + 1)
-            # Snow
-            st.snow()
-            ans = produce_ans_model_1(uploaded_file, question)
-            #result will be displayed if button is pressed
-            st.success("Your answer is : "
-                    "{}".format(ans))
-        else:
-            ans = ""
+    submit_btn = st.button('Submit')
+    if submit_btn:
+        # Progress bar
+        my_bar = st.progress(0)
+        for percent_complete in range(100):
+            time.sleep(0.03)
+            my_bar.progress(percent_complete + 1)
+        
+        ans = produce_ans_model_1(uploaded_file, question)
+        #result will be displayed if button is pressed
+        st.success("Your answer is : "
+                "{}".format(ans))
+        
+        # balloons
+        st.balloons()
+    else:
+        ans = ""
 
-        with hin:
-            st.write("Stay tuned to experience the feature🙂")
+        # with hin:
+        #     st.write("Stay tuned to experience the feature🙂")
 
 st.subheader("Here are some nerdy analytics 😁")
 
